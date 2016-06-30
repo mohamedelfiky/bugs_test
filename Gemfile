@@ -16,6 +16,7 @@ group :development do
   gem 'guard'
   gem 'guard-rspec', require: false
   gem 'guard-rubocop'
+  gem 'listen', '~> 3.0.6'
 
   # Static code analyzer
   gem 'rubocop', require: false
