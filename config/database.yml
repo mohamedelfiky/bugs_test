@@ -1,0 +1,8 @@
+<%= IO.read('config/local_database.yml') if File.exists?('config/local_database.yml') %>
+
+test:
+  adapter: sqlite3
+  pool: 5
+  timeout: 5000
+  database: db/test.sqlite3
+
