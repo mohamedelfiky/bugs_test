@@ -12,13 +12,14 @@ RSpec.describe Bug, type: :model do
     it { is_expected.to validate_uniqueness_of(:number).scoped_to(:application_token) }
   end
 
+  let(:bug) do
+    b = build(:bug)
+    b.increment_bugs_count
+    b.save!
+    b
+  end
+
   describe 'Bugs count_by_application' do
-    let(:bug) do
-      b = build(:bug)
-      b.increment_bugs_count
-      b.save!
-      b
-    end
     let(:bugs_count) { Bug.where(application_token: bug.application_token).count }
 
     it 'returns the correct count from db' do
@@ -46,6 +47,13 @@ RSpec.describe Bug, type: :model do
     it 'returns the correct bug from redis' do
       Redis.current.set("#{ bug.application_token }_#{ bug.number }", bug.json_attributes)
       expect(bug.json_attributes).to eq(Bug.filter(bug.number, bug.application_token).json_attributes)
+    end
+  end
+
+  describe 'decrement_bugs_count' do
+    it 'returns the correct bug from db' do
+      count = Bug.count_by_application(bug.application_token).to_i
+      expect(bug.decrement_bugs_count).to eq(count - 1)
     end
   end
 end

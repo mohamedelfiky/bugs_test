@@ -52,10 +52,13 @@ class Bug < ActiveRecord::Base
     define_method("#{ method_name }_bugs_count".to_sym) do
       redis_key = "#{ application_token }_bugs_count"
       count = Redis.current.get(redis_key).to_i || Bug.where(application_token: application_token).count
-      count = (method_name == :increment) ? count + 1 : count - 1
-
+      count = if method_name == :increment
+                self.number = count + 1
+                count + 1
+              else
+                count - 1
+              end
       Redis.current.set(redis_key, count)
-      self.number = count
       count
     end
   end
