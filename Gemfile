@@ -12,6 +12,15 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Fake data generator for tests and seeds
 gem 'faker'
 
+# redis key-value cache store
+gem 'redis'
+gem 'redis-namespace'
+gem 'redis-rails'
+gem 'redis-rack-cache'
+
+gem 'puma'
+gem 'sidekiq'
+
 group :development do
   gem 'guard'
   gem 'guard-rspec', require: false
@@ -46,6 +55,8 @@ end
 group :test do
   # Use sqlite3 as the database for test env
   gem 'sqlite3'
+  gem 'rspec-sidekiq'
+  gem 'fakeredis', require: 'fakeredis/rspec'
   # Reporting test coverage to Code Climate
   gem 'codeclimate-test-reporter', require: nil
 end

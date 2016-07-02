@@ -4,6 +4,5 @@ FactoryGirl.define do
     os 'IOS 9.1'
     memory 1024
     storage 20_480
-    bug
   end
 end

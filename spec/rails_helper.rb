@@ -40,6 +40,7 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = false
 
+  config.include FactoryGirl::Syntax::Methods
   config.infer_spec_type_from_file_location!
 
   # Filter lines from Rails gems in backtraces.
