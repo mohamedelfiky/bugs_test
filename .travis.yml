@@ -6,4 +6,3 @@ env:
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - RAILS_ENV=test bundle exec rake
- 
