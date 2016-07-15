@@ -17,6 +17,9 @@
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'rake'
+require 'elasticsearch/extensions/test/cluster/tasks'
+require 'elasticsearch/transport'
 
 if ENV['CODECLIMATE_REPO_TOKEN']
   # Running on CI

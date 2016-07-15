@@ -22,8 +22,8 @@ gem 'redis-rack-cache'
 gem 'kaminari'
 
 # elasticsearch for full-text search
-gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
-gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 
 gem 'puma'
 gem 'sidekiq'
@@ -64,6 +64,7 @@ group :test do
   gem 'sqlite3'
   gem 'rspec-sidekiq'
   gem 'fakeredis', require: 'fakeredis/rspec'
+  gem 'elasticsearch-extensions'
   # Reporting test coverage to Code Climate
   gem 'codeclimate-test-reporter', require: nil
 end

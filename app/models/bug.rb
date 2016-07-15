@@ -13,7 +13,7 @@ class Bug < ActiveRecord::Base
   accepts_nested_attributes_for :state
   default_scope { includes(:state) }
 
-  # define mapping for elastic search
+  # define mapping for elasticsearch
   settings ELASTIC_CONFIG[:custom_analyzer] do
     mappings dynamic: 'false' do
       keywords = Bug.column_names - %w(comment)

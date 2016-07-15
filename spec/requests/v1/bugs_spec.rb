@@ -13,6 +13,16 @@ describe V1::BugsController do
   let(:application_token) { { 'x-application-token' => bug.application_token } }
 
   describe 'GET #index' do
+    before do
+      Bug.__elasticsearch__.create_index! index: Bug.index_name
+      bug.__elasticsearch__.index_document
+      sleep 1
+    end
+
+    after do
+      Bug.__elasticsearch__.client.indices.delete index: Bug.index_name
+    end
+
     before { get '/bugs', { q: bug.number }, application_token }
 
     it 'returns http success' do
@@ -29,10 +39,9 @@ describe V1::BugsController do
     end
 
     it 'respects `search` param', :elasticsearch do
-      bug.__elasticsearch__.index_document
-      sleep 1
       get '/bugs', { q: bug.number }, application_token
       expect(json.size).to eq(1)
+      expect(json[0]['number']).to eq(bug.number)
     end
   end
 
