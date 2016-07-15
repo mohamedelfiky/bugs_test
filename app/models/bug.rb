@@ -1,4 +1,5 @@
 class Bug < ActiveRecord::Base
+  include Searchable
   after_destroy :decrement_bugs_count
 
   has_one :state, dependent: :destroy
@@ -10,8 +11,19 @@ class Bug < ActiveRecord::Base
   enum priority: { minor: 0, major: 1, critical: 2 }
 
   accepts_nested_attributes_for :state
-
   default_scope { includes(:state) }
+
+  # define mapping for elastic search
+  settings ELASTIC_CONFIG[:custom_analyzer] do
+    mappings dynamic: 'false' do
+      keywords = Bug.column_names - %w(comment)
+
+      keywords.each do |field|
+        indexes field, analyzer: 'keyword', include_in_all: true
+      end
+      indexes :comment, analyzer: 'edge_nGram_analyzer', search_analyzer: 'whitespace_analyzer', include_in_all: true
+    end
+  end
 
   def self.count_by_application(application)
     redis_key = "#{ application }_bugs_count"
@@ -51,13 +63,8 @@ class Bug < ActiveRecord::Base
   %i(increment decrement).each do |method_name|
     define_method("#{ method_name }_bugs_count".to_sym) do
       redis_key = "#{ application_token }_bugs_count"
-      count = Redis.current.get(redis_key).to_i || Bug.where(application_token: application_token).count
-      count = if method_name == :increment
-                self.number = count + 1
-                count + 1
-              else
-                count - 1
-              end
+      count = (method_name == :increment) ? Redis.current.incr(redis_key) : Redis.current.decr(redis_key)
+      self.number = count if method_name == :increment
       Redis.current.set(redis_key, count)
       count
     end

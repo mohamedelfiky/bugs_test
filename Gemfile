@@ -18,6 +18,13 @@ gem 'redis-namespace'
 gem 'redis-rails'
 gem 'redis-rack-cache'
 
+# Pagination gem
+gem 'kaminari'
+
+# elasticsearch for full-text search
+gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
+gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
+
 gem 'puma'
 gem 'sidekiq'
 

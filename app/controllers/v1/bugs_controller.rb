@@ -2,6 +2,10 @@ module V1
   class BugsController < ApplicationController
     before_action :set_application_token
 
+    def index
+      @bugs = Bug.search(params[:q] || '').page(params[:page]).records
+    end
+
     def show
       @bug = Bug.filter(params[:number], @application_token)
     end
@@ -24,7 +28,7 @@ module V1
     private
 
     def bug_params
-      permitted_fields = [:status, :priority, state_attributes: %i(memory storage device os)]
+      permitted_fields = [:status, :priority, :comment, state_attributes: %i(memory storage device os)]
       params.require(:bug).permit(permitted_fields).merge(application_token: @application_token)
     end
 

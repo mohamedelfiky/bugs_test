@@ -1,5 +1,10 @@
 describe V1::BugsController do
   describe 'routing' do
+    it 'routes to #index' do
+      expect(get('/bugs/')).
+        to route_to('v1/bugs#index', format: :json)
+    end
+
     it 'routes to #show' do
       expect(get('/bugs/1')).
         to route_to('v1/bugs#show', number: '1', format: :json)

@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :state do
-    device 'iPhone 6'
-    os 'IOS 9.1'
+    sequence(:device) { |n| "device#{ n }" }
+    sequence(:os) { |n| "os#{ n }" }
     memory 1024
     storage 20_480
   end

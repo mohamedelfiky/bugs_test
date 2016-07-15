@@ -12,6 +12,30 @@ describe V1::BugsController do
   let(:json) { JSON.parse(response.body) }
   let(:application_token) { { 'x-application-token' => bug.application_token } }
 
+  describe 'GET #index' do
+    before { get '/bugs', { q: bug.number }, application_token }
+
+    it 'returns http success' do
+      expect(response).to be_success
+    end
+
+    it 'renders correct template' do
+      is_expected.to render_template('v1/bugs/index')
+    end
+
+    it 'respects `page` param' do
+      get '/bugs', { q: bug.number, page: 2 }, application_token
+      expect(json.size).to eq(0)
+    end
+
+    it 'respects `search` param', :elasticsearch do
+      bug.__elasticsearch__.index_document
+      sleep 1
+      get '/bugs', { q: bug.number }, application_token
+      expect(json.size).to eq(1)
+    end
+  end
+
   describe 'GET #show' do
     context 'with valid params' do
       before { get "/bugs/#{ bug.number }", {}, application_token }
