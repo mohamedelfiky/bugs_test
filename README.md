@@ -5,14 +5,14 @@ Example API application built on top of Ruby on Rails using TDD/BDD techniques.
 Provided API backbone can be easely extended and versioned, clients should use HTTP header to specify version (`Accept: application/vnd.instabug.api.v1`), or default version will be used.
 
 ## Local setup
-**prerequisite mysql and redis**
+**prerequisite mysql, redis, elasticsearch and rabbitmq**
 
-Copy the local_database.sample.yml to local_database.yml and change local database configration, then run `./bin/setup` after cloning this repo. It will install all dependencies and create database.
+Copy the local_database.sample.yml to local_database.yml and change local database configration, then run `./bin/setup` after cloning this repo. It will install all dependencies, create database and setup rabbitMQ routing `rake rabbitmq:setup`.
 
 This application uses `sqlite3` for tests in order to simplify testing process.
 
 ## Server
-Use `rails s && bundle exec sidekiq` or just `foreman start` (if you have `foreman` installed locally) to run application server.
+Use `rails s && WORKERS=BugsWorker rake sneakers:run` or just `foreman start` (if you have `foreman` installed locally) to run application server.
 
 
 ## Testing
@@ -35,6 +35,9 @@ You are free to use `rake`, `rake spec` or even `rspec` command to run test suit
 
 #### Available actions
 All support `x-application-token` as header param to identitfy current Application.
+- **List Bugs**  
+  `GET /bugs` 
+    Supports `page`and `q` params.
 - **Count Bugs**  
   `GET /bugs/count`  
 - **Create new Bug**  

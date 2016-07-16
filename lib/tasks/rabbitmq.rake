@@ -1,5 +1,5 @@
 namespace :rabbitmq do
-  desc 'Setup rabbitmq routing'
+  desc 'Setup rabbitMQ routing'
   task setup: :environment do
     require 'bunny'
 
