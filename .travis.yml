@@ -5,8 +5,10 @@ env:
   - DB=sqlite
 services:
   - elasticsearch
+  - rabbitmq
 before_script:
   - sleep 10
 script:
+  - RAILS_ENV=test bundle exec rake rabbitmq:setup
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - RAILS_ENV=test bundle exec rake

@@ -26,7 +26,6 @@ gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
 gem 'puma'
-gem 'sidekiq'
 
 # RabbitMQ Ruby client
 gem 'bunny'
@@ -66,7 +65,6 @@ end
 group :test do
   # Use sqlite3 as the database for test env
   gem 'sqlite3'
-  gem 'rspec-sidekiq'
   gem 'fakeredis', require: 'fakeredis/rspec'
   gem 'elasticsearch-extensions'
   # Reporting test coverage to Code Climate
