@@ -13,7 +13,7 @@ module V1
     def create
       @bug = Bug.new(bug_params)
 
-      if @bug.push_to_worker
+      if @bug.send_to_publisher
         render json: { number: @bug.number }, status: :created
       else
         respond_with(@bug.errors.full_messages)

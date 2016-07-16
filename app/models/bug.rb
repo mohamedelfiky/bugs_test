@@ -49,12 +49,12 @@ class Bug < ActiveRecord::Base
     end
   end
 
-  def push_to_worker
+  def send_to_publisher
     increment_bugs_count
     redis_key = "#{ application_token }_#{ number }"
     if valid?
       Redis.current.set(redis_key, json_attributes)
-      BugsWorker.perform_async(redis_key)
+      Publisher.publish('bugs', redis_key)
     end
     valid?
   end
@@ -65,7 +65,6 @@ class Bug < ActiveRecord::Base
       redis_key = "#{ application_token }_bugs_count"
       count = (method_name == :increment) ? Redis.current.incr(redis_key) : Redis.current.decr(redis_key)
       self.number = count if method_name == :increment
-      Redis.current.set(redis_key, count)
       count
     end
   end

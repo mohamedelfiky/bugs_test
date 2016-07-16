@@ -28,6 +28,10 @@ gem 'elasticsearch-rails'
 gem 'puma'
 gem 'sidekiq'
 
+# RabbitMQ Ruby client
+gem 'bunny'
+gem 'sneakers'
+
 group :development do
   gem 'guard'
   gem 'guard-rspec', require: false

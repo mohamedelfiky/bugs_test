@@ -18,6 +18,7 @@ Bundler.require(*Rails.groups)
 module Instabug
   class Application < Rails::Application
     config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
+    config.autoload_paths += %W(#{ Rails.root }/app/workers)
     config.active_record.raise_in_transactional_callbacks = true
   end
 end
