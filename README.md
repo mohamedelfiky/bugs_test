@@ -1,5 +1,7 @@
 # README [![Code Climate](https://codeclimate.com/github/mohamedelfiky/bugs_test/badges/gpa.svg)](https://codeclimate.com/github/mohamedelfiky/bugs_test) [![Test Coverage](https://codeclimate.com/github/mohamedelfiky/bugs_test/badges/coverage.svg)](https://codeclimate.com/github/mohamedelfiky/bugs_test/coverage) [![Build Status](https://travis-ci.org/mohamedelfiky/bugs_test.svg?branch=master)](https://travis-ci.org/mohamedelfiky/bugs_test)
 
+> this project is an instabug assignment, Application Accepted (not mentained any more)
+
 Example API application built on top of Ruby on Rails using TDD/BDD techniques.
 
 Provided API backbone can be easely extended and versioned, clients should use HTTP header to specify version (`Accept: application/vnd.instabug.api.v1`), or default version will be used.
